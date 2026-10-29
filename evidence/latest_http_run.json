@@ -1,0 +1,398 @@
+{
+  "status": {
+    "docker": false,
+    "ready": true,
+    "runner": "wsl",
+    "model_configured": true,
+    "image": "python:3.11-alpine"
+  },
+  "summary": {
+    "tested": 2,
+    "differences": 1,
+    "model_candidates": 2,
+    "runner": "wsl",
+    "comparisons": 10,
+    "model_valid": 2,
+    "model_tested": 1,
+    "incomplete": false
+  },
+  "cases": [
+    {
+      "input": {
+        "args": [
+          "http\t://ww"
+        ]
+      },
+      "original_input": {
+        "args": [
+          "http\t://www.python\n.org\t/java\nscript:\talert('msg\r\n')/?query\n=\tsomething#frag\nment"
+        ],
+        "kwargs": {}
+      },
+      "source": "user",
+      "old": {
+        "kind": "return",
+        "value": [
+          "",
+          "",
+          "http://ww",
+          "",
+          ""
+        ]
+      },
+      "new": {
+        "kind": "return",
+        "value": [
+          "http",
+          "ww",
+          "",
+          "",
+          ""
+        ]
+      },
+      "different": true,
+      "minimized": true,
+      "shrink_attempts": 8,
+      "runs": [
+        {
+          "phase": "initial",
+          "input": {
+            "args": [
+              "http\t://www.python\n.org\t/java\nscript:\talert('msg\r\n')/?query\n=\tsomething#frag\nment"
+            ],
+            "kwargs": {}
+          },
+          "old": {
+            "kind": "return",
+            "value": [
+              "",
+              "",
+              "http://www.python.org/javascript:alert('msg')/",
+              "query=something",
+              "fragment"
+            ]
+          },
+          "new": {
+            "kind": "return",
+            "value": [
+              "http",
+              "www.python.org",
+              "/javascript:alert('msg')/",
+              "query=something",
+              "fragment"
+            ]
+          },
+          "different": true
+        },
+        {
+          "phase": "shrink",
+          "input": {
+            "args": [
+              ""
+            ],
+            "kwargs": {}
+          },
+          "old": {
+            "kind": "return",
+            "value": [
+              "",
+              "",
+              "",
+              "",
+              ""
+            ]
+          },
+          "new": {
+            "kind": "return",
+            "value": [
+              "",
+              "",
+              "",
+              "",
+              ""
+            ]
+          },
+          "different": false
+        },
+        {
+          "phase": "shrink",
+          "input": {
+            "args": [
+              "http\t://www.python\n.org\t/java\nscript:\tal"
+            ],
+            "kwargs": {}
+          },
+          "old": {
+            "kind": "return",
+            "value": [
+              "",
+              "",
+              "http://www.python.org/javascript:al",
+              "",
+              ""
+            ]
+          },
+          "new": {
+            "kind": "return",
+            "value": [
+              "http",
+              "www.python.org",
+              "/javascript:al",
+              "",
+              ""
+            ]
+          },
+          "different": true
+        },
+        {
+          "phase": "shrink",
+          "input": {
+            "args": [
+              "http\t://www.python\n."
+            ],
+            "kwargs": {}
+          },
+          "old": {
+            "kind": "return",
+            "value": [
+              "",
+              "",
+              "http://www.python.",
+              "",
+              ""
+            ]
+          },
+          "new": {
+            "kind": "return",
+            "value": [
+              "http",
+              "www.python.",
+              "",
+              "",
+              ""
+            ]
+          },
+          "different": true
+        },
+        {
+          "phase": "shrink",
+          "input": {
+            "args": [
+              "http\t://ww"
+            ],
+            "kwargs": {}
+          },
+          "old": {
+            "kind": "return",
+            "value": [
+              "",
+              "",
+              "http://ww",
+              "",
+              ""
+            ]
+          },
+          "new": {
+            "kind": "return",
+            "value": [
+              "http",
+              "ww",
+              "",
+              "",
+              ""
+            ]
+          },
+          "different": true
+        },
+        {
+          "phase": "shrink",
+          "input": {
+            "args": [
+              "http\t"
+            ],
+            "kwargs": {}
+          },
+          "old": {
+            "kind": "return",
+            "value": [
+              "",
+              "",
+              "http",
+              "",
+              ""
+            ]
+          },
+          "new": {
+            "kind": "return",
+            "value": [
+              "",
+              "",
+              "http",
+              "",
+              ""
+            ]
+          },
+          "different": false
+        },
+        {
+          "phase": "shrink",
+          "input": {
+            "args": [
+              "://ww"
+            ],
+            "kwargs": {}
+          },
+          "old": {
+            "kind": "return",
+            "value": [
+              "",
+              "",
+              "://ww",
+              "",
+              ""
+            ]
+          },
+          "new": {
+            "kind": "return",
+            "value": [
+              "",
+              "",
+              "://ww",
+              "",
+              ""
+            ]
+          },
+          "different": false
+        },
+        {
+          "phase": "shrink",
+          "input": {
+            "args": [
+              "http\t://ww"
+            ]
+          },
+          "old": {
+            "kind": "return",
+            "value": [
+              "",
+              "",
+              "http://ww",
+              "",
+              ""
+            ]
+          },
+          "new": {
+            "kind": "return",
+            "value": [
+              "http",
+              "ww",
+              "",
+              "",
+              ""
+            ]
+          },
+          "different": true
+        },
+        {
+          "phase": "shrink",
+          "input": {
+            "args": [
+              ""
+            ]
+          },
+          "old": {
+            "kind": "return",
+            "value": [
+              "",
+              "",
+              "",
+              "",
+              ""
+            ]
+          },
+          "new": {
+            "kind": "return",
+            "value": [
+              "",
+              "",
+              "",
+              "",
+              ""
+            ]
+          },
+          "different": false
+        }
+      ]
+    },
+    {
+      "input": {
+        "args": [
+          "http://example.com/path"
+        ],
+        "kwargs": {}
+      },
+      "original_input": {
+        "args": [
+          "http://example.com/path"
+        ],
+        "kwargs": {}
+      },
+      "source": "model",
+      "old": {
+        "kind": "return",
+        "value": [
+          "http",
+          "example.com",
+          "/path",
+          "",
+          ""
+        ]
+      },
+      "new": {
+        "kind": "return",
+        "value": [
+          "http",
+          "example.com",
+          "/path",
+          "",
+          ""
+        ]
+      },
+      "different": false,
+      "minimized": false,
+      "shrink_attempts": 0,
+      "runs": [
+        {
+          "phase": "initial",
+          "input": {
+            "args": [
+              "http://example.com/path"
+            ],
+            "kwargs": {}
+          },
+          "old": {
+            "kind": "return",
+            "value": [
+              "http",
+              "example.com",
+              "/path",
+              "",
+              ""
+            ]
+          },
+          "new": {
+            "kind": "return",
+            "value": [
+              "http",
+              "example.com",
+              "/path",
+              "",
+              ""
+            ]
+          },
+          "different": false
+        }
+      ]
+    }
+  ]
+}

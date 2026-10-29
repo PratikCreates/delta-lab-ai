@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101a24">
+  <title>Delta Lab — differential regression testing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="rail" aria-label="Workspace navigation">
+      <a class="brand" href="#top" aria-label="Delta Lab home"><span class="brand-mark">Δ</span><span class="brand-word">delta<span>.</span></span></a>
+      <div class="rail-divider"></div>
+      <div class="rail-label">LAB</div>
+      <a href="#workbench" class="rail-link active" aria-current="page"><span class="rail-glyph">⌘</span><span class="rail-tip">Workbench</span></a>
+      <a href="#results" class="rail-link"><span class="rail-glyph">◉</span><span class="rail-tip">Run results</span></a>
+      <div class="rail-bottom"><span class="rail-pulse"></span><span class="rail-tip">Isolated runner</span></div>
+    </aside>
+
+    <main id="top">
+      <header class="topbar">
+        <div class="breadcrumb"><span>DELTA LAB</span><b>/</b><strong>DIFFERENTIAL WORKBENCH</strong></div>
+        <div class="top-status"><span class="status-indicator" id="runnerDot"></span><span id="runnerStatus">Checking runner…</span><i></i><span class="privacy-label" id="runnerMode">CHECKING RUNNER</span></div>
+      </header>
+
+      <div class="page-wrap">
+        <section class="hero" aria-labelledby="pageTitle">
+          <div class="hero-copy">
+            <div class="eyebrow"><span class="eyebrow-mark">Δ</span> BEHAVIORAL REGRESSION TESTING <span class="eyebrow-rule"></span> 01</div>
+            <h1 id="pageTitle">Find the change<br><em>that matters.</em></h1>
+            <p>Compare two versions of a Python function against generated and supplied inputs. Inspect every difference before deciding whether it is a regression.</p>
+          </div>
+          <div class="hero-note"><span class="note-icon">◎</span><div><strong>Review, don’t assume.</strong><p>A behavioral difference is evidence to inspect, not an automatic bug report.</p></div></div>
+        </section>
+
+        <section class="workbench" id="workbench" aria-label="Differential test setup">
+          <div class="section-bar"><div><span class="section-index">01</span><h2>Define the comparison</h2></div><div class="section-actions"><button class="example-button" id="loadExample" type="button">Load real CPython example <span>↗</span></button><span class="section-hint">YOUR CODE STAYS INSIDE THE TEST BOUNDARY</span></div></div>
+          <div class="example-notice hidden" id="exampleNotice" role="status"><span>i</span><p><strong>Upstream regression fixture loaded.</strong> The source is taken from the listed CPython revisions; no run results are bundled. Run the comparison to inspect the behavior in this isolated environment.</p><button id="dismissExample" type="button" aria-label="Dismiss example information">×</button></div>
+          <div class="code-grid">
+            <article class="code-panel old-panel">
+              <div class="panel-heading"><div class="version-label"><span class="version-dot old-dot"></span><span>BASELINE</span><small>OLD VERSION</small></div><span class="language-tag">PYTHON 3</span></div>
+              <label class="sr-only" for="oldCode">Baseline Python function</label>
+              <textarea class="code-input" id="oldCode" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="def calculate_total(items, tax_rate=0.0):&#10;    subtotal = sum(items)&#10;    return round(subtotal * (1 + tax_rate), 2)" aria-describedby="codeHelp"></textarea>
+              <div class="editor-footer"><span>Paste the trusted baseline function</span><span id="oldLines">0 LINES</span></div>
+            </article>
+            <div class="compare-axis" aria-hidden="true"><span>VS</span><i></i></div>
+            <article class="code-panel new-panel">
+              <div class="panel-heading"><div class="version-label"><span class="version-dot new-dot"></span><span>PROPOSED</span><small>NEW VERSION</small></div><span class="language-tag">PYTHON 3</span></div>
+              <label class="sr-only" for="newCode">Proposed Python function</label>
+              <textarea class="code-input" id="newCode" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="def calculate_total(items, tax_rate=0.0):&#10;    subtotal = sum(items)&#10;    return round(subtotal * (1 + tax_rate), 2)" aria-describedby="codeHelp"></textarea>
+              <div class="editor-footer"><span>Paste the candidate implementation</span><span id="newLines">0 LINES</span></div>
+            </article>
+          </div>
+          <p class="field-help" id="codeHelp">Provide a single callable function in each editor. The function name below is called with generated inputs.</p>
+
+          <div class="config-grid">
+            <div class="config-card function-card">
+              <div class="config-heading"><span class="config-icon">ƒ</span><div><h3>Callable target</h3><p>Use the same function name in both versions.</p></div></div>
+              <label for="functionName">FUNCTION NAME</label>
+              <input id="functionName" type="text" value="" placeholder="e.g. calculate_total" autocomplete="off" spellcheck="false">
+              <span class="field-help">The runner imports and invokes this function from each snippet.</span>
+            </div>
+            <div class="config-card schema-card">
+              <div class="config-heading"><span class="config-icon schema-icon">{ }</span><div><h3>Input contract</h3><p>JSON Schema describing valid invocation inputs.</p></div><span class="optional-chip">REQUIRED</span></div>
+              <label for="inputSchema">JSON SCHEMA</label>
+              <textarea id="inputSchema" class="schema-input" spellcheck="false" placeholder="{&#10;  &quot;type&quot;: &quot;object&quot;,&#10;  &quot;properties&quot;: {&#10;    &quot;args&quot;: { &quot;type&quot;: &quot;array&quot; },&#10;    &quot;kwargs&quot;: { &quot;type&quot;: &quot;object&quot; }&#10;  }&#10;}"></textarea>
+              <span class="field-help">Each generated invocation follows <code>{"args": [], "kwargs": {}}</code>.</span>
+            </div>
+          </div>
+
+          <details class="advanced" id="advancedInputs">
+            <summary><span class="advanced-plus">＋</span><span>Supplied cases &amp; generation controls</span><span class="summary-note">OPTIONAL</span></summary>
+            <div class="advanced-body">
+              <div class="candidate-field"><label for="candidateInputs">SUPPLIED INPUTS <small>JSON ARRAY · OPTIONAL</small></label><textarea id="candidateInputs" class="candidate-input" spellcheck="false" placeholder="[&#10;  { &quot;args&quot;: [[12.5, 7.25]], &quot;kwargs&quot;: { &quot;tax_rate&quot;: 0.08 } }&#10;]"></textarea><span class="field-help">Your cases are combined with model-suggested cases when generation is enabled.</span></div>
+              <div class="generation-controls"><label class="switch-row" for="useModel"><span class="switch-copy"><strong>Generate additional cases with Nemotron</strong><small>Model suggestions are validated against your schema.</small></span><input id="useModel" type="checkbox" checked><span class="switch-track" aria-hidden="true"></span></label><label class="limit-field" for="maxCases">MAX CASES<input id="maxCases" type="number" min="1" max="12" value="6"></label></div>
+            </div>
+          </details>
+
+          <div class="run-row">
+            <div class="run-data-note"><span class="boundary-icon">↗</span><div><strong>Data sent when you run</strong><p id="transmissionDisclosure" aria-live="polite"></p><p class="runner-disclosure" id="runnerDisclosure" aria-live="polite"></p></div></div>
+            <button class="run-button" id="runButton" type="button"><span class="run-button-label">Generate cases &amp; compare</span><span class="run-arrow" aria-hidden="true">↗</span></button>
+          </div>
+          <div class="alert hidden" id="formError" role="alert"></div>
+        </section>
+
+        <section class="results-section" id="results" aria-live="polite">
+          <div class="section-bar results-heading"><div><span class="section-index">02</span><h2>Run evidence</h2></div><span class="section-hint" id="resultsHint">NO RUN YET</span></div>
+          <div class="results-empty" id="resultsEmpty"><div class="empty-orbit"><span>Δ</span><i></i><b></b></div><h3>Nothing compared yet.</h3><p>Provide both implementations and the input contract to create an inspectable differential run.</p><div class="empty-steps"><span>01 &nbsp; VALIDATE</span><span>02 &nbsp; GENERATE</span><span>03 &nbsp; COMPARE</span></div></div>
+          <div class="run-progress hidden" id="runProgress" role="status"><span class="spinner"></span><div><strong id="progressTitle">Preparing an isolated run…</strong><p id="progressDetail">The baseline and proposed function are being checked against the same inputs.</p></div><span class="progress-live"><i></i> LIVE</span></div>
+          <div class="run-results hidden" id="runResults">
+            <div class="summary-card" id="summaryCard"></div>
+            <div class="review-banner"><span class="review-symbol">!</span><p><strong>Differences need human interpretation.</strong> A changed result can be intentional. Check the input, both observed outcomes, and your product requirements before calling it a regression.</p></div>
+            <div class="cases-toolbar"><div><h3>Case-by-case evidence</h3><p id="caseSubhead">Observed results from both implementations.</p></div><div class="case-filters" role="group" aria-label="Filter cases"><button class="filter-button active" data-filter="all" type="button">All <span id="allCount">0</span></button><button class="filter-button" data-filter="different" type="button">Differences <span id="diffCount">0</span></button></div></div>
+            <div class="case-list" id="caseList"></div>
+            <div class="export-panel"><div class="export-symbol">↓</div><div><strong id="exportTitle">Take the regression test with you.</strong><p id="exportContext">Only differing cases are included. The test uses baseline outputs as candidate expectations; set <code>DELTA_TARGET_MODULE</code> and review whether that behavior is intended.</p></div><button class="outline-button" id="downloadTest" type="button" disabled>Download pytest file <span>↓</span></button></div>
+            <p class="result-footnote" id="resultFootnote">All displayed outcomes are returned by the isolated runner. No output is inferred from the code.</p>
+          </div>
+        </section>
+
+        <footer><span><b>Δ</b> DELTA LAB <i>·</i> DIFFERENTIAL REGRESSION WORKBENCH</span><span>NEBIUS TOKEN FACTORY <i>×</i> NVIDIA NEMOTRON</span></footer>
+      </div>
+    </main>
+  </div>
+  <script src="/app.js" defer></script>
+</body>
+</html>
