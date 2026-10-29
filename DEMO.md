@@ -1,6 +1,6 @@
 # Delta Lab — under-three-minute demo draft
 
-**Target runtime:** about 2:40 at a measured pace.  
+**Target runtime:** about 2:40 at a measured pace.
 **Capture:** no local video is available. Computer Use stopped in the prior browser check, so this file is a storyboard and narration draft only; no recording or upload was made.
 
 ## Evidence for this draft
